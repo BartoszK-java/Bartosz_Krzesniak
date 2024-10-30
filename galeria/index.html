@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galeria z Efektem Powiększenia</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="script.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            background-color: white;
+        }
+
+        .gallery {
+            display: flex;
+            gap: 20px;
+        }
+
+        .thumbnail {
+            position: relative;
+            text-align: center;
+        }
+
+        .thumbnail img {
+            transition: transform 0.4s ease, opacity 0.4s ease;
+            width: 150px;
+            height: 150px;
+        }
+
+        .description {
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            margin-top: 10px;
+            font-size: 14px;
+            color: red;
+            position: absolute;
+            bottom: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+
+<div class="gallery">
+    <div class="thumbnail" data-desc="bardzo fajny i elegancki gangster">
+        <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fvignette.wikia.nocookie.net%2Fpeaky-blinders%2Fimages%2F9%2F93%2FTommyportrait2.png%2Frevision%2Flatest%3Fcb%3D20171106170631&f=1&nofb=1&ipt=5b8aa88d1b15734295e65c5353739e71f3047c92005416395695cdec79db39eb&ipo=images" alt="Obrazek 1">
+        <p class="description"></p>
+    </div>
+    <div class="thumbnail" data-desc="Wyśmienity wychowawca i nauczyciel sieciowy">
+        <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmedia.licdn.com%2Fdms%2Fimage%2FC4D03AQFeQgweMfKuKg%2Fprofile-displayphoto-shrink_800_800%2F0%2F1532037575264%3Fe%3D2147483647%26v%3Dbeta%26t%3DLnRpDLlzfejNv0SeBjtyd1LkA-Gbc6H0_5uDFAXXbOE&f=1&nofb=1&ipt=3b7dd1ca1fcacae97e9a6b8e0637b3058c6e2ff5467f2118501c479cd8dd29be&ipo=images" alt="Obrazek 2">
+        <p class="description"></p>
+    </div>
+    <div class="thumbnail" data-desc="literalnie ja">
+        <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwallpapercave.com%2Fwp%2Fwc1783749.jpg&f=1&nofb=1&ipt=4b39fe3bc1e4de91d126291fb9018904ec6ba186e9fdd33dd7ea279cfcbffffb&ipo=images" alt="Obrazek 3">
+        <p class="description"></p>
+    </div>
+</div>
+
+</body>
+</html>
