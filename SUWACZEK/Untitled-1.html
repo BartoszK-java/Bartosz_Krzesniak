@@ -4,70 +4,70 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="script.js"> </script>
         <style>
-        body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f0f0f0;
-    font-family: Arial, sans-serif;
-}
-
-.slider-container {
-    width: 100%;
-    max-width: 600px;
-    overflow: hidden;
-    position: relative;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-.slider {
-    display: flex;
-    transition: transform 0.5s ease;
-}
-
-.slide {
-    min-width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #fff;
-}
-
-.slide img {
-    width: 100%;
-    height: auto;
-    border-radius: 10px;
-}
-
-.prev, .next {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    padding: 10px;
-    background-color: rgba(0, 0, 0, 0.5);
-    color: white;
-    cursor: pointer;
-    font-size: 24px;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.prev { left: 10px; }
-.next { right: 10px; }
-            </style>
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f0f0f0;
+        font-family: Arial, sans-serif;
+    }
+    
+    .slider-container {
+        width: 100%;
+        max-width: 600px;
+        overflow: hidden;
+        position: relative;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .slider {
+        display: flex;
+        transition: transform 0.5s ease;
+    }
+    
+    .slide {
+        min-width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #fff;
+    }
+    
+    .slide img {
+        width: 100%;
+        height: auto;
+        border-radius: 10px;
+    }
+    
+    .prev, .next {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        padding: 10px;
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+        cursor: pointer;
+        font-size: 24px;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .prev { left: 10px; }
+    .next { right: 10px; }
+        </style>
     </head>
     <body>
         <div class="slider-container">
             <div class="slider">
                 <div class="slide"><img src="https://static.wikia.nocookie.net/bohaterowie/images/d/de/Kapitan_Bomba_Render.png/revision/latest?cb=20230930172608&path-prefix=pl"></div>
                 <div class="slide"><img src="https://static.wikia.nocookie.net/egzorcysta/images/0/05/BonerProfil.png/revision/latest?cb=20240617154254&path-prefix=pl"></div>
-                <div class="slide"><img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fblokekipa.fandom.com%2Fwiki%2FSpejson&psig=AOvVaw16vo5V279o_ABspsEHLFNK&ust=1730972651414000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCMC17uG1x4kDFQAAAAAdAAAAABAE"></div>
+                <div class="slide"><img src="https://i.ytimg.com/vi/ebJyz1dNW1w/hq720.jpg?sqp=-oaymwE7CK4FEIIDSFryq4qpAy0IARUAAAAAGAElAADIQj0AgKJD8AEB-AHSBoAC4AOKAgwIABABGFIgZSg8MA8=&rs=AOn4CLCEFreHd__qHCrR-9goQ8T8kuBh4Q"></div>
             </div>
             <span class="prev">❮</span>
             <span class="next">❯</span>
