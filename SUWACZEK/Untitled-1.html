@@ -1,0 +1,27 @@
+<html>
+    <head>
+        <title>Slider w jQuery</title>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="script.js"> </script>
+        <style>
+            /* Podstawowe style */
+            .slider-container { width: 100%; max-width: 600px; overflow: hidden; position: relative; }
+            .slider { display: flex; transition: transform 0.5s ease; }
+            .slide { min-width: 100%; }
+            .prev, .next { position: absolute; top: 50%; transform: translateY(-50%); padding: 10px; background-color: rgba(0, 0, 0, 0.5); color: white; cursor: pointer; font-size: 24px; }
+            .prev { left: 10px; }
+            .next { right: 10px; }
+        </style>
+    </head>
+    <body>
+        <div class="slider-container">
+            <div class="slider">
+                <div class="slide"><img src="https://static.wikia.nocookie.net/bohaterowie/images/d/de/Kapitan_Bomba_Render.png/revision/latest?cb=20230930172608&path-prefix=pl"></div>
+                <div class="slide"><img src="https://static.wikia.nocookie.net/egzorcysta/images/0/05/BonerProfil.png/revision/latest?cb=20240617154254&path-prefix=pl"></div>
+                <div class="slide"><img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fblokekipa.fandom.com%2Fwiki%2FSpejson&psig=AOvVaw16vo5V279o_ABspsEHLFNK&ust=1730972651414000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCMC17uG1x4kDFQAAAAAdAAAAABAE"></div>
+            </div>
+            <span class="prev">❮</span>
+            <span class="next">❯</span>
+        </div>
+    </body>
+</html>
