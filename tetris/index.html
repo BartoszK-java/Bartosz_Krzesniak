@@ -1,12 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="script.js"></script>
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spadający Klocek</title>
+  <style>
+    canvas {
+      display: block;
+      margin: 20px auto;
+      border: 2px solid black;
+    }
+  </style>
 </head>
 <body>
-    
+  <canvas id="gameCanvas" width="800" height="600"></canvas>
+  <script>
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    const canvasWidth = canvas.width;
+    const canvasHeight = canvas.height;
+    const blockSize = 20;
+    const gravity = 2;
+    let blockX = (canvasWidth - blockSize) / 2;
+    let blockY = 0;
+    let isFalling = true;
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft' && blockX > 0) blockX -= blockSize;
+      if (e.key === 'ArrowRight' && blockX < canvasWidth - blockSize) blockX += blockSize;
+    });
+
+    function gameLoop() {
+      ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+      if (isFalling) {
+        blockY += gravity;
+        if (blockY >= canvasHeight - blockSize) {
+          blockY = canvasHeight - blockSize;
+          isFalling = false;
+        }
+      }
+      ctx.fillStyle = 'blue';
+      ctx.fillRect(blockX, blockY, blockSize, blockSize);
+      requestAnimationFrame(gameLoop);
+    }
+
+    gameLoop();
+  </script>
 </body>
 </html>
