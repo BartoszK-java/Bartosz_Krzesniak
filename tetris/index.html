@@ -1,50 +1,78 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Spadający Klocek</title>
-  <style>
-    canvas {
-      display: block;
-      margin: 20px auto;
-      border: 2px solid black;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spadający Klocek</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        canvas {
+            border: 1px solid black;
+            background-color: #ffffff;
+        }
+    </style>
 </head>
 <body>
-  <canvas id="gameCanvas" width="800" height="600"></canvas>
-  <script>
+
+<canvas id="gameCanvas" width="800" height="600"></canvas>
+
+<script>
     const canvas = document.getElementById('gameCanvas');
     const ctx = canvas.getContext('2d');
+    const klocekWidth = 20;
+    const klocekHeight = 20;
     const canvasWidth = canvas.width;
     const canvasHeight = canvas.height;
-    const blockSize = 20;
-    const gravity = 2;
-    let blockX = (canvasWidth - blockSize) / 2;
-    let blockY = 0;
-    let isFalling = true;
+    let klocekX = (canvasWidth - klocekWidth) / 2;
+    let klocekY = 0;
+    let klocekSpeed = 2;
+    let klocekMovingLeft = false;
+    let klocekMovingRight = false;
+    let isKlocekOnGround = false;
 
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowLeft' && blockX > 0) blockX -= blockSize;
-      if (e.key === 'ArrowRight' && blockX < canvasWidth - blockSize) blockX += blockSize;
+        if (e.key === 'ArrowLeft' && !isKlocekOnGround) klocekMovingLeft = true;
+        if (e.key === 'ArrowRight' && !isKlocekOnGround) klocekMovingRight = true;
     });
 
-    function gameLoop() {
-      ctx.clearRect(0, 0, canvasWidth, canvasHeight);
-      if (isFalling) {
-        blockY += gravity;
-        if (blockY >= canvasHeight - blockSize) {
-          blockY = canvasHeight - blockSize;
-          isFalling = false;
+    document.addEventListener('keyup', (e) => {
+        if (e.key === 'ArrowLeft') klocekMovingLeft = false;
+        if (e.key === 'ArrowRight') klocekMovingRight = false;
+    });
+
+    function drawKlocek() {
+        ctx.fillStyle = 'red';
+        ctx.fillRect(klocekX, klocekY, klocekWidth, klocekHeight);
+    }
+
+    function updateKlocekPosition() {
+        if (!isKlocekOnGround) {
+            if (klocekMovingLeft && klocekX > 0) klocekX -= 5;
+            if (klocekMovingRight && klocekX < canvasWidth - klocekWidth) klocekX += 5;
+            klocekY += klocekSpeed;
+            if (klocekY > canvasHeight - klocekHeight) {
+                klocekY = canvasHeight - klocekHeight;
+                isKlocekOnGround = true;
+            }
         }
-      }
-      ctx.fillStyle = 'blue';
-      ctx.fillRect(blockX, blockY, blockSize, blockSize);
-      requestAnimationFrame(gameLoop);
+    }
+
+    function gameLoop() {
+        ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+        updateKlocekPosition();
+        drawKlocek();
+        requestAnimationFrame(gameLoop);
     }
 
     gameLoop();
-  </script>
+</script>
+
 </body>
 </html>
