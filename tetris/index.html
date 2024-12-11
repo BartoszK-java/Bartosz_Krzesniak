@@ -57,7 +57,7 @@
             [0, 1, 1],
             [1, 1, 0]
         ],
-       I: [
+        I: [
             [1],
             [1],
             [1],
@@ -69,6 +69,8 @@
     let shapeX = Math.floor(canvasWidth / 2 / blockSize) * blockSize;
     let shapeY = 0;
     let isShapeOnGround = false;
+
+    const placedBlocks = [];
 
     function getRandomShape() {
         const keys = Object.keys(shapes);
@@ -98,8 +100,29 @@
             if (shapeY + currentShape.length * blockSize >= canvasHeight) {
                 shapeY = canvasHeight - currentShape.length * blockSize;
                 isShapeOnGround = true;
+                saveShapeToGround();
             }
         }
+    }
+
+    function saveShapeToGround() {
+        currentShape.forEach((row, rowIndex) => {
+            row.forEach((cell, colIndex) => {
+                if (cell) {
+                    placedBlocks.push({
+                        x: shapeX + colIndex * blockSize,
+                        y: shapeY + rowIndex * blockSize
+                    });
+                }
+            });
+        });
+    }
+
+    function drawPlacedBlocks() {
+        ctx.fillStyle = 'blue';
+        placedBlocks.forEach(block => {
+            ctx.fillRect(block.x, block.y, blockSize, blockSize);
+        });
     }
 
     function initNewShape() {
@@ -118,19 +141,21 @@
 
     function gameLoop() {
         ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+        drawPlacedBlocks();
         if (!currentShape) {
             initNewShape();
         }
         updateShapePosition();
         drawShape(currentShape, shapeX, shapeY);
         if (isShapeOnGround) {
-            initNewShape();
+            cancelAnimationFrame(animationId);
+        } else {
+            animationId = requestAnimationFrame(gameLoop);
         }
-        requestAnimationFrame(gameLoop);
     }
 
-    gameLoop();
+    let animationId = requestAnimationFrame(gameLoop);
 </script>
 
 </body>
-</html> 
+</html>
