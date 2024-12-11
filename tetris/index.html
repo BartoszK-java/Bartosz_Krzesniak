@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spadający Klocek</title>
+    <title>Spadający Klocek - Tetris</title>
     <style>
         body {
             margin: 0;
@@ -26,48 +26,106 @@
 <script>
     const canvas = document.getElementById('gameCanvas');
     const ctx = canvas.getContext('2d');
-    const klocekWidth = 20;
-    const klocekHeight = 20;
+    const blockSize = 30;
     const canvasWidth = canvas.width;
     const canvasHeight = canvas.height;
-    let klocekX = (canvasWidth - klocekWidth) / 2;
-    let klocekY = 0;
-    let klocekSpeed = 2;
-    let klocekMovingLeft = false;
-    let klocekMovingRight = false;
-    let isKlocekOnGround = false;
 
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowLeft' && !isKlocekOnGround) klocekMovingLeft = true;
-        if (e.key === 'ArrowRight' && !isKlocekOnGround) klocekMovingRight = true;
-    });
+    const shapes = {
+        O: [
+            [1, 1],
+            [1, 1]
+        ],
+        T: [
+            [0, 1, 0],
+            [1, 1, 1]
+        ],
+        L: [
+            [1, 0],
+            [1, 0],
+            [1, 1]
+        ],
+        J: [
+            [0, 1],
+            [0, 1],
+            [1, 1]
+        ],
+        Z: [
+            [1, 1, 0],
+            [0, 1, 1]
+        ],
+        S: [
+            [0, 1, 1],
+            [1, 1, 0]
+        ],
+       I: [
+            [1],
+            [1],
+            [1],
+            [1]
+        ]
+    };
 
-    document.addEventListener('keyup', (e) => {
-        if (e.key === 'ArrowLeft') klocekMovingLeft = false;
-        if (e.key === 'ArrowRight') klocekMovingRight = false;
-    });
+    let currentShape = null;
+    let shapeX = Math.floor(canvasWidth / 2 / blockSize) * blockSize;
+    let shapeY = 0;
+    let isShapeOnGround = false;
 
-    function drawKlocek() {
-        ctx.fillStyle = 'red';
-        ctx.fillRect(klocekX, klocekY, klocekWidth, klocekHeight);
+    function getRandomShape() {
+        const keys = Object.keys(shapes);
+        const randomKey = keys[Math.floor(Math.random() * keys.length)];
+        return shapes[randomKey];
     }
 
-    function updateKlocekPosition() {
-        if (!isKlocekOnGround) {
-            if (klocekMovingLeft && klocekX > 0) klocekX -= 5;
-            if (klocekMovingRight && klocekX < canvasWidth - klocekWidth) klocekX += 5;
-            klocekY += klocekSpeed;
-            if (klocekY > canvasHeight - klocekHeight) {
-                klocekY = canvasHeight - klocekHeight;
-                isKlocekOnGround = true;
+    function drawShape(shape, x, y) {
+        ctx.fillStyle = 'red';
+        shape.forEach((row, rowIndex) => {
+            row.forEach((cell, colIndex) => {
+                if (cell) {
+                    ctx.fillRect(
+                        x + colIndex * blockSize,
+                        y + rowIndex * blockSize,
+                        blockSize,
+                        blockSize
+                    );
+                }
+            });
+        });
+    }
+
+    function updateShapePosition() {
+        if (!isShapeOnGround) {
+            shapeY += 2;
+            if (shapeY + currentShape.length * blockSize >= canvasHeight) {
+                shapeY = canvasHeight - currentShape.length * blockSize;
+                isShapeOnGround = true;
             }
         }
     }
 
+    function initNewShape() {
+        currentShape = getRandomShape();
+        shapeX = Math.floor(canvasWidth / 2 / blockSize) * blockSize;
+        shapeY = 0;
+        isShapeOnGround = false;
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (!isShapeOnGround) {
+            if (e.key === 'ArrowLeft' && shapeX > 0) shapeX -= blockSize;
+            if (e.key === 'ArrowRight' && shapeX + currentShape[0].length * blockSize < canvasWidth) shapeX += blockSize;
+        }
+    });
+
     function gameLoop() {
         ctx.clearRect(0, 0, canvasWidth, canvasHeight);
-        updateKlocekPosition();
-        drawKlocek();
+        if (!currentShape) {
+            initNewShape();
+        }
+        updateShapePosition();
+        drawShape(currentShape, shapeX, shapeY);
+        if (isShapeOnGround) {
+            initNewShape();
+        }
         requestAnimationFrame(gameLoop);
     }
 
@@ -75,4 +133,4 @@
 </script>
 
 </body>
-</html>
+</html> 
