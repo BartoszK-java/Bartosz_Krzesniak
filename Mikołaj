@@ -87,7 +87,7 @@
 <body>
     <div id="welcome-screen" class="screen">
         <h1>Szukanie Mikołaja</h1>
-        <img src="santa.png" alt="Mikołaj" class="santa-animation">
+        <div class="santa-animation">🎅</div>
         <button id="start-game" class="btn">Rozpocznij grę</button>
     </div>
 
@@ -98,12 +98,16 @@
 
     <div id="congratulations-screen" class="screen hidden">
         <h1>Gratulacje! Znalazłeś Mikołaja!</h1>
-        <img src="santa.png" alt="Mikołaj" class="santa-animation">
+        <div class="santa-animation">🎅</div>
         <button id="play-again" class="btn">Zagraj ponownie</button>
     </div>
 
-    <audio id="success-sound" src="success.mp3"></audio>
-    <audio id="click-sound" src="click.mp3"></audio>
+    <audio id="success-sound">
+        <source src="success.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="click-sound">
+        <source src="click.mp3" type="audio/mpeg">
+    </audio>
 
     <script>
         const welcomeScreen = document.getElementById("welcome-screen");
@@ -140,6 +144,8 @@
                 showScreen(congratulationsScreen);
             } else {
                 event.target.style.backgroundColor = "#ffcccc";
+                event.target.style.cursor = "not-allowed";
+                event.target.removeEventListener("click", handleTileClick);
             }
         }
 
