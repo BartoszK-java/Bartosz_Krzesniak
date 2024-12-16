@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Szukanie Mikołaja</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f8ff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .screen {
+            text-align: center;
+            display: none;
+        }
+
+        .screen h1, .screen h2 {
+            margin: 20px 0;
+        }
+
+        #game-board {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+            gap: 10px;
+            max-width: 600px;
+            margin: 20px auto;
+        }
+
+        .grid div {
+            width: 80px;
+            height: 80px;
+            background-color: #fff;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.3s;
+        }
+
+        .grid div:hover {
+            transform: scale(1.1);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .santa-animation {
+            width: 150px;
+            animation: bounce 1.5s infinite;
+        }
+
+        .btn {
+            background-color: #ff4500;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #ff6347;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="welcome-screen" class="screen">
+        <h1>Szukanie Mikołaja</h1>
+        <img src="santa.png" alt="Mikołaj" class="santa-animation">
+        <button id="start-game" class="btn">Rozpocznij grę</button>
+    </div>
+
+    <div id="game-screen" class="screen hidden">
+        <h2>Gdzie jest Mikołaj?</h2>
+        <div id="game-board" class="grid"></div>
+    </div>
+
+    <div id="congratulations-screen" class="screen hidden">
+        <h1>Gratulacje! Znalazłeś Mikołaja!</h1>
+        <img src="santa.png" alt="Mikołaj" class="santa-animation">
+        <button id="play-again" class="btn">Zagraj ponownie</button>
+    </div>
+
+    <audio id="success-sound" src="success.mp3"></audio>
+    <audio id="click-sound" src="click.mp3"></audio>
+
+    <script>
+        const welcomeScreen = document.getElementById("welcome-screen");
+        const gameScreen = document.getElementById("game-screen");
+        const congratulationsScreen = document.getElementById("congratulations-screen");
+        const gameBoard = document.getElementById("game-board");
+        const startGameButton = document.getElementById("start-game");
+        const playAgainButton = document.getElementById("play-again");
+        const successSound = document.getElementById("success-sound");
+        const clickSound = document.getElementById("click-sound");
+        const boardSize = 5;
+        let santaPosition;
+
+        function getRandomPosition() {
+            return Math.floor(Math.random() * boardSize * boardSize);
+        }
+
+        function generateBoard() {
+            gameBoard.innerHTML = "";
+            santaPosition = getRandomPosition();
+            for (let i = 0; i < boardSize * boardSize; i++) {
+                const tile = document.createElement("div");
+                tile.dataset.index = i;
+                tile.addEventListener("click", handleTileClick);
+                gameBoard.appendChild(tile);
+            }
+        }
+
+        function handleTileClick(event) {
+            const index = parseInt(event.target.dataset.index, 10);
+            clickSound.play();
+            if (index === santaPosition) {
+                successSound.play();
+                showScreen(congratulationsScreen);
+            } else {
+                event.target.style.backgroundColor = "#ffcccc";
+            }
+        }
+
+        function showScreen(screen) {
+            welcomeScreen.classList.add("hidden");
+            gameScreen.classList.add("hidden");
+            congratulationsScreen.classList.add("hidden");
+            screen.classList.remove("hidden");
+        }
+
+        startGameButton.addEventListener("click", () => {
+            generateBoard();
+            showScreen(gameScreen);
+        });
+
+        playAgainButton.addEventListener("click", () => {
+            generateBoard();
+            showScreen(gameScreen);
+        });
+
+        showScreen(welcomeScreen);
+    </script>
+</body>
+</html>
