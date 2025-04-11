@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Zadanie z JSON i JavaScript</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9fafb;
+      color: #1f2937;
+      padding: 2rem;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      color: #111827;
+    }
+
+    .instructions {
+      background-color: #e0f2fe;
+      border-left: 5px solid #0284c7;
+      padding: 1rem;
+      margin-bottom: 2rem;
+      border-radius: 0.5rem;
+    }
+
+    code {
+      background-color: #f1f5f9;
+      padding: 0.2rem 0.4rem;
+      border-radius: 4px;
+      font-size: 0.95rem;
+    }
+
+    #data {
+      background-color: #ffffff;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .item {
+      padding: 0.75rem;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .item:last-child {
+      border-bottom: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>🧠 Zadanie: Odczyt danych JSON z API</h1>
+
+  <div class="instructions">
+    <p><strong>Cel:</strong> Pobierz dane z zewnętrznego API w formacie JSON i wyświetl je na stronie.</p>
+    <ol>
+      <li>Użyj JavaScript, aby pobrać dane z API:</li>
+      <p><code>https://jsonplaceholder.typicode.com/users</code></p>
+
+      <li>Wyświetl dane w elemencie <code>#data</code>.</li>
+      <li>Dla każdego użytkownika utwórz blok <code>.item</code> z jego imieniem (name), emailem i nazwą firmy (company.name).</li>
+    </ol>
+    <p>Nie modyfikuj stylów ani HTML – pracujesz tylko w JS!</p>
+    <p>Powodzenia!</p>
+  </div>
+
+  <div id="data">Tutaj pojawią się dane użytkowników...</div>
+
+  <script>
+  fetch('https://jsonplaceholder.typicode.com/users')
+    .then(response => response.json())
+    .then(users => {
+      const container = document.getElementById('data');
+      users.forEach(user => {
+        const item = document.createElement('div');
+        item.className = 'item';
+        item.innerHTML = `
+          <p>${user.name}</p>
+          <p>${user.email}</p>
+          <p>${user.company.name}</p>
+        `;
+        container.appendChild(item);
+      });
+    }); 
+  </script>
+</body>
+</html>
