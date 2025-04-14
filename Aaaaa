@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title>Przelicznik walut</title>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    label, select, input, button { display: block; margin: 10px 0; }
+  </style>
+</head>
+<body>
+
+  <h1>Przelicznik walut</h1>
+
+  <label for="kwota">Kwota:</label>
+  <input type="number" id="kwota" />
+
+  <label for="walutaZ">Waluta źródłowa:</label>
+  <select id="walutaZ"></select>
+
+  <label for="walutaDo">Waluta docelowa:</label>
+  <select id="walutaDo"></select>
+
+  <button id="przycisk">Przelicz</button>
+
+  <h2 id="wynik"></h2>
+
+  <script>
+    const walutaZ = document.getElementById('walutaZ')
+    const walutaDo = document.getElementById('walutaDo')
+    const przycisk = document.getElementById('przycisk')
+    const wynik = document.getElementById('wynik')
+
+    fetch('https://api.exchangerate.host/symbols')
+      .then(odpowiedz => odpowiedz.json())
+      .then(dane => {
+        const symbole = dane.symbols
+        for (const kod in symbole) {
+          const opcja1 = document.createElement('option')
+          opcja1.value = kod
+          opcja1.textContent = `${kod} - ${symbole[kod].description}`
+          walutaZ.appendChild(opcja1)
+
+          const opcja2 = document.createElement('option')
+          opcja2.value = kod
+          opcja2.textContent = `${kod} - ${symbole[kod].description}`
+          walutaDo.appendChild(opcja2)
+        }
+        walutaZ.value = 'USD'
+        walutaDo.value = 'PLN'
+      })
+
+    przycisk.addEventListener('click', () => {
+      const kwota = document.getElementById('kwota').value
+      const z = walutaZ.value
+      const do_ = walutaDo.value
+
+      if (kwota === '' || kwota <= 0) {
+        wynik.textContent = 'Wprowadź poprawną kwotę.'
+        return
+      }
+
+      fetch(`https://api.exchangerate.host/convert?from=${z}&to=${do_}&amount=${kwota}`)
+        .then(odpowiedz => odpowiedz.json())
+        .then(dane => {
+          wynik.textContent = `Wynik: ${dane.result.toFixed(2)} ${do_}`
+        })
+    })
+  </script>
+
+</body>
+</html>
