@@ -2,7 +2,7 @@
 <html lang="pl">
 <head>
   <meta charset="UTF-8">
-  <title>Przelicznik walut</title>
+  <title>Przelicznik walut (tabela A i B)</title>
   <style>
     body { font-family: Arial; padding: 20px; }
     label, select, input, button { display: block; margin: 10px 0; }
@@ -30,9 +30,10 @@
     const walutaDo = document.getElementById('walutaDo')
     const przycisk = document.getElementById('przycisk')
     const wynik = document.getElementById('wynik')
+    const listaWalut = {}
 
-    function dodajWaluty(select, waluty) {
-      for (const kod in waluty) {
+    function dodajWaluty(select) {
+      for (const kod in listaWalut) {
         const opcja = document.createElement('option')
         opcja.value = kod
         opcja.textContent = `${kod}`
@@ -40,26 +41,33 @@
       }
     }
 
-    fetch('https://api.nbp.pl/api/exchangerates/tables/A?format=json')
-      .then(odpowiedz => odpowiedz.json())
+    function pobierzWaluty() {
+      Promise.all([
+        fetch('https://api.nbp.pl/api/exchangerates/tables/A?format=json').then(r => r.json()),
+        fetch('https://api.nbp.pl/api/exchangerates/tables/B?format=json').then(r => r.json())
+      ])
       .then(dane => {
-        if (dane && dane[0] && dane[0].rates) {
-          const waluty = dane[0].rates
-          const listaWalut = {}
-          waluty.forEach(waluta => {
-            listaWalut[waluta.code] = waluta
-          })
-          dodajWaluty(walutaZ, listaWalut)
-          dodajWaluty(walutaDo, listaWalut)
-          walutaZ.value = 'USD'
-          walutaDo.value = 'PLN'
-        } else {
-          wynik.textContent = 'Nie udało się pobrać listy walut.'
-        }
+        const kursyA = dane[0][0].rates
+        const kursyB = dane[1][0].rates
+        kursyA.forEach(w => listaWalut[w.code] = w)
+        kursyB.forEach(w => listaWalut[w.code] = w)
+        listaWalut['PLN'] = { code: 'PLN', mid: 1 }
+        dodajWaluty(walutaZ)
+        dodajWaluty(walutaDo)
+        walutaZ.value = 'USD'
+        walutaDo.value = 'PLN'
       })
       .catch(() => {
-        wynik.textContent = 'Błąd podczas ładowania danych z API.'
+        wynik.textContent = 'Błąd podczas ładowania walut.'
       })
+    }
+
+    function pobierzKurs(kod) {
+      if (kod === 'PLN') return Promise.resolve(1)
+      return fetch(`https://api.nbp.pl/api/exchangerates/rates/A/${kod}/?format=json`)
+        .then(r => r.ok ? r.json() : fetch(`https://api.nbp.pl/api/exchangerates/rates/B/${kod}/?format=json`).then(rr => rr.json()))
+        .then(dane => dane.rates[0].mid)
+    }
 
     przycisk.addEventListener('click', () => {
       const kwota = document.getElementById('kwota').value
@@ -71,25 +79,17 @@
         return
       }
 
-      fetch(`https://api.nbp.pl/api/exchangerates/rates/A/${z}/?format=json`)
-        .then(odpowiedz => odpowiedz.json())
-        .then(dane => {
-          const kursZ = dane.rates[0].mid
-          fetch(`https://api.nbp.pl/api/exchangerates/rates/A/${do_}/?format=json`)
-            .then(odpowiedz => odpowiedz.json())
-            .then(dane => {
-              const kursDo = dane.rates[0].mid
-              const wynikPrzeliczenia = (kwota * kursDo / kursZ).toFixed(2)
-              wynik.textContent = `Wynik: ${wynikPrzeliczenia} ${do_}`
-            })
-            .catch(() => {
-              wynik.textContent = 'Błąd podczas przeliczania.'
-            })
+      Promise.all([pobierzKurs(z), pobierzKurs(do_)])
+        .then(([kursZ, kursDo]) => {
+          const przeliczona = (kwota * kursDo / kursZ).toFixed(2)
+          wynik.textContent = `Wynik: ${przeliczona} ${do_}`
         })
         .catch(() => {
           wynik.textContent = 'Błąd podczas przeliczania.'
         })
     })
+
+    pobierzWaluty()
   </script>
 
 </body>
