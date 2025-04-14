@@ -81,7 +81,7 @@
 
       Promise.all([pobierzKurs(z), pobierzKurs(do_)])
         .then(([kursZ, kursDo]) => {
-          const przeliczona = (kwota * kursDo / kursZ).toFixed(2)
+          const przeliczona = (kwota * kursZ / kursDo).toFixed(2)
           wynik.textContent = `Wynik: ${przeliczona} ${do_}`
         })
         .catch(() => {
