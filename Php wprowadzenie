@@ -1,0 +1,63 @@
+<?php
+echo "Witaj w świecie PHP!<br>";
+
+$imie = "Jan";
+$wiek = 30;
+
+echo "Imię: $imie<br>";
+echo "Wiek: $wiek<br>";
+?>
+<?php
+$liczba = 10;
+
+if ($liczba > 0) {
+    echo "Liczba jest dodatnia.<br>";
+} else {
+    echo "Liczba nie jest dodatnia.<br>";
+}
+
+for ($i = 1; $i <= 5; $i++) {
+    echo "Iteracja: $i<br>";
+}
+?>
+<?php
+function dodaj($a, $b) {
+    return $a + $b;
+}
+
+$wynik = dodaj(5, 10);
+echo "Wynik dodawania: $wynik<br>";
+?>
+<?php
+$owoce = ["jabłko", "banan", "gruszka"];
+foreach ($owoce as $owoc) {
+    echo "Owoc: $owoc<br>";
+}
+
+$tekst = "PHP jest super!";
+echo "Długość tekstu: " . strlen($tekst) . "<br>";
+
+$plik = "dane.txt";
+file_put_contents($plik, $tekst);
+
+$zawartosc = file_get_contents($plik);
+echo "Zawartość pliku: $zawartosc<br>";
+?>
+<?php
+class Samochod {
+    public $marka;
+    public $model;
+
+    public function __construct($marka, $model) {
+        $this->marka = $marka;
+        $this->model = $model;
+    }
+
+    public function przedstawSie() {
+        return "Samochód: $this->marka $this->model";
+    }
+}
+
+$auto = new Samochod("Toyota", "Corolla");
+echo $auto->przedstawSie();
+?>
