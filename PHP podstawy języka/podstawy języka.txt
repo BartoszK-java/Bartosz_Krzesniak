@@ -1,0 +1,319 @@
+
+
+Tagi PHP:
+
+    Rozpoczęcie kodu PHP: <?php
+    Zakończenie kodu PHP: ?> (nieobowiązkowe, jeśli kod PHP jest ostatnią częścią pliku)
+    Krótkie tagi (niezalecane): <? ?>
+    Tagi do wyświetlania: <?= ?>
+
+Wyświetlanie:
+    
+<?php echo 'Hello world'; ?> Użycie echo do wyświetlania tekstu:
+
+Alternatywna forma:
+    <?= 'Hello world' ?>
+
+Komentarze:
+
+    Komentarz jednoliniowy:
+// To jest komentarz
+
+Komentarz wieloliniowy:
+
+/*
+To jest komentarz
+...
+
+Komentarze PHPDoc:
+
+/**
+* Opis funkcji
+...
+
+Zmienne:
+
+    Zmienne w PHP zaczynają się od znaku dolara $.
+    Nazwa zmiennej może zawierać litery (A-Z), cyfry (0-9) oraz znak podkreślenia _, ale nie może zaczynać się od cyfry.
+    Przykład deklaracji zmiennej:
+
+    <?php
+    $language = 'PHP';
+    ...
+        ?>
+Nazewnictwo zmiennych:
+
+    Zaleca się używanie języka angielskiego i stylu camelCase (np. $favouriteLanguage).
+    Nazwy zmiennych powinny być opisowe, aby ułatwić zrozumienie kodu.
+
+Predefiniowane zmienne:
+
+    Istnieją zmienne, które są automatycznie inicjowane przez PHP, np. tablice z danymi przesłanymi do skryptu.
+
+Stałe:
+
+    Stałe są podobne do zmiennych, ale ich wartość nie może być zmieniana w czasie działania skryptu.
+    Nazwy stałych zapisujemy wielkimi literami.
+    Można je zdefiniować na dwa sposoby:
+
+        define('LANGUAGE', 'PHP');
+        echo LANGUAGE;
+        ...
+
+        Różnica między define() a const:
+            define() może być użyte w dowolnym miejscu w skrypcie.
+            const ogranicza dostępność do miejsca, w którym została zdefiniowana.
+
+    Predefiniowane stałe:
+        PHP ma również predefiniowane stałe oraz tzw. magiczne stałe, które zmieniają się automatycznie podczas działania skryptu
+
+        
+
+Automatyczne dobieranie typu:
+
+    W PHP typ zmiennej jest dobierany automatycznie na podstawie jej zawartości. Można przypisać różne typy danych do tej samej zmiennej.
+
+Funkcja var_dump():
+
+    Używana do testowania kodu, pokazuje typ zmiennej oraz jej wartość. Może przyjmować jedną lub więcej zmiennych jako argumenty.
+    Przykład:
+
+    $isVisible = true;
+    var_dump($isVisible); // wynik: bool(true)
+
+Typy zmiennych:
+
+    boolean (bool): Wartość logiczna, może być true lub false.
+
+$isVisible = true;
+var_dump($isVisible); // wynik: bool(true)
+
+integer (int): Liczba całkowita.
+
+$age = 18;
+var_dump($age); // wynik: int(18)
+
+float: Liczba zmiennoprzecinkowa.
+
+$price = 19.99;
+var_dump($price); // wynik: float(19.99)
+
+string: Tekst, zapisany w apostrofach lub cudzysłowach.
+
+$title = 'PHPDevs';
+var_dump($title); // wynik: string(7) "PHPDevs"
+
+array: Tablica (szersze omówienie w przyszłości).
+object: Obiekt (szersze omówienie w przyszłości).
+resource: Zasób (np. połączenie z bazą danych).
+null: Wartość null, oznaczająca brak wartości.
+
+$user = null;
+var_dump($user); // wynik: NULL
+
+Operatory arytmetyczne
+
+Służą do wykonywania podstawowych operacji matematycznych:
+
+    Dodawanie (+):
+
+echo 1 + 2; // wynik: 3
+
+Odejmowanie (-):
+
+$money = 10;
+echo $money - 2.99; // wynik: 7.01
+
+Mnożenie (*):
+
+$sideA = 6;
+$sideB = 3;
+...
+
+Dzielenie (/):
+
+$candies = 16;
+$people = 4;
+...
+
+Modulo (%): Reszta z dzielenia.
+
+echo 10 % 3; // wynik: 1
+
+Potęgowanie (**):
+
+    echo 4 ** 2; // wynik: 16
+
+Operatory przypisania
+
+Służą do przypisywania wartości do zmiennych:
+
+    Podstawowy operator przypisania (=):
+
+$year = 2017;
+
+Przypisanie z operacją:
+
+    $day = 20;
+    $day += 7; // wynik: 27
+
+Operatory ciągu
+
+    Konkatenacja (.): Łączenie ciągów.
+
+    $logo1 = 'PHP';
+    $logo2 = 'Devs';
+    ...
+
+Operatory inkrementacji i dekrementacji
+
+    Inkrementacja (++): Zwiększa wartość o 1.
+
+$count = 0;
+echo ++$count; // wynik: 1
+
+Dekrementacja (--): Zmniejsza wartość o 1.
+
+    $count = 10;
+    echo --$count; // wynik: 9
+
+Operatory porównania
+
+Służą do porównywania wartości:
+
+    Równość (==):
+
+var_dump(4 == 4); // wynik: bool(true)
+
+Równość z typem (===):
+
+var_dump(4 === '4'); // wynik: bool(false)
+
+Nierówność (!=):
+
+var_dump(4 != 2); // wynik: bool(true)
+
+Nierówność z typem (!==):
+
+var_dump(4 !== '4'); // wynik: bool(true)
+
+Większe (>) i mniejsze (<):
+
+    var_dump(4 > 2); // wynik: bool(true)
+    var_dump(4 < 7); // wynik: bool(true)
+
+Operator wykonania
+
+Umożliwia wykonanie poleceń powłoki:
+
+echo `pwd`; // wyświetla ścieżkę do aktualnego katalogu
+
+Operator kontroli błędów
+
+Umożliwia ukrycie błędów (zła praktyka):
+
+echo @$name; // nie wyświetla błędu
+Różnice między apostrofami a cudzysłowami
+
+    Apostrofy ('):
+        Tekst zapisany w apostrofach jest traktowany dosłownie. Nie następuje interpretacja zmiennych ani znaków specjalnych.
+        Przykład:
+
+    $version = 8;
+    echo 'PHP $version!'; // wynik: PHP $version!
+
+Cudzysłowy ("):
+
+    Tekst zapisany w cudzysłowach jest interpretowany. Zmienne są zamieniane na swoje wartości, a znaki specjalne są przetwarzane.
+    Przykład:
+
+        echo "PHP $version!"; // wynik: PHP 8!
+
+Konkatenacja
+
+    Można użyć konkatenacji, aby połączyć tekst i zmienne, nawet gdy zmienna jest liczbą.
+    Przykład:
+
+    echo 'PHP ' . $version . '!'; // wynik: PHP 8!
+
+Który sposób jest lepszy?
+
+    Jeśli nie używasz wielu zmiennych w stringu, lepiej używać apostrofów, ponieważ interpreter nie musi dodatkowo przetwarzać tekstu.
+    W przypadku dłuższych tekstów z wieloma zmiennymi, cudzysłowy mogą być bardziej czytelne.
+
+Użycie klamr w cudzysłowach
+
+    Przy użyciu cudzysłowów warto umieścić nazwy zmiennych w klamrach {}, co zwiększa czytelność kodu.
+    Przykład:
+
+    echo "PHP {$version}!"; // wynik: PHP 8!
+
+Heredoc i Nowdoc
+
+    Heredoc: Działa jak string w cudzysłowach, umożliwia interpretację zmiennych.
+    Nowdoc: Działa jak string w apostrofach, nie interpretuje zmiennych.
+
+Definicja tablic
+
+    Tablice (arrays) to struktury danych, które pozwalają na przechowywanie wielu wartości w jednej zmiennej.
+    Przykład tworzenia tablicy:
+
+    $people = ['Jan', 'Piotr', 'Adrian', 'Marek', 'Adam'];
+
+Indeksy
+
+    Elementy tablicy mają automatycznie nadawane numery indeksów, zaczynając od 0.
+    Przykład dostępu do elementu:
+
+    echo $people[1]; // wynik: Piotr
+
+Modyfikacja elementów
+
+    Można zmieniać wartości elementów tablicy:
+
+    $people[2] = 'Andrzej';
+    echo $people[2]; // wynik: Andrzej
+
+Dodawanie elementów
+
+    Można dodawać nowe elementy do tablicy:
+
+
+    $people[] = 'Arkadiusz'; // automatyczny indeks
+    $people[7] = 'Arkadiusz'; // z określonym indeksem
+
+5. Tablice asocjacyjne
+
+    Umożliwiają użycie kluczy tekstowych zamiast indeksów liczbowych, co zwiększa czytelność.
+    Przykład:
+
+    $person = [
+    'name' => 'Jan',
+    ...
+
+6. Zagnieżdżanie tablic
+
+    Można tworzyć tablice wewnątrz innych tablic:
+    
+    $people = [
+    'Jan' => [
+    ...
+
+7. Rozpakowywanie elementów (PHP >= 7.4)
+
+    Umożliwia "wypakowanie" elementów z tablicy:
+
+var_dump(...['Jan', 'Piotr', 'Marek']);
+
+Przykład dodawania elementów z jednej tablicy do drugiej:
+
+    $oldPeople = ['Jan', 'Piotr'];
+    $people = ['Arkadiusz', ...$oldPeople, 'Marek'];
+
+8. Klucze różnego typu
+
+    Tablica może zawierać klucze zarówno liczbowe, jak i tekstowe:
+
+$person = [
+'name' => 'Jan',
+...
